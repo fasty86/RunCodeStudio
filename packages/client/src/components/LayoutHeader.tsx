@@ -1,15 +1,54 @@
 import { Header } from 'antd/es/layout/layout'
-import { ItemType, MenuItemType } from 'antd/es/menu/interface'
+import { Menu } from 'antd'
 
-import LayoutHeaderMenu from './LayoutHeaderMenu'
-type layoutHeaderProps = {
-  items: ItemType<MenuItemType>[]
-}
-function LayoutHeader(props: layoutHeaderProps) {
+import { Link } from 'react-router-dom'
+
+const items = [
+  {
+    key: 'main',
+    path: '/',
+    title: 'Главная',
+  },
+
+  {
+    key: 'play',
+    path: 'play',
+    title: 'Игра',
+  },
+
+  {
+    key: 'profile',
+    path: 'profile',
+    title: 'Профиль',
+  },
+  {
+    key: 'forum',
+    path: 'forum',
+    title: 'Форум',
+  },
+  {
+    key: 'forum-topic',
+    path: 'forum-topic',
+    title: 'Топик форума',
+  },
+  {
+    key: 'leader-board',
+    path: 'leader-board',
+    title: 'Лидборд',
+  },
+]
+
+function LayoutHeader() {
   return (
     <Header style={{ display: 'flex', alignItems: 'center' }}>
       <div className="demo-logo" />
-      <LayoutHeaderMenu items={props.items} />
+      <Menu theme="dark" mode="horizontal" style={{ flex: 1, minWidth: 0 }}>
+        {items.map(item => (
+          <Menu.Item key={item.key}>
+            <Link to={item.path}>{item.title}</Link>
+          </Menu.Item>
+        ))}
+      </Menu>
     </Header>
   )
 }

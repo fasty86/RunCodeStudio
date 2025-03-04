@@ -1,11 +1,11 @@
 import React from 'react'
+import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom/client'
+import { ConfigProvider } from 'antd'
+
 import App from './App'
 import './index.css'
-import { Provider } from 'react-redux'
 import { store } from './store/store'
-import { BrowserRouter } from 'react-router-dom'
-import { ConfigProvider } from 'antd'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -16,9 +16,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             colorPrimary: '#8076a3',
           },
         }}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <App />
       </ConfigProvider>
     </Provider>
   </React.StrictMode>
