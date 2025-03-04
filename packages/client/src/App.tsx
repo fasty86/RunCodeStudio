@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
-import './App.css'
-import Container from './components/Layout'
-import { Routes, Route } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
+import AppRouter from './AppRoutes'
 
 function App() {
   useEffect(() => {
@@ -15,9 +14,9 @@ function App() {
     fetchServerData()
   }, [])
   return (
-    <Routes>
-      <Route element={<Container />}></Route>
-    </Routes>
+    <BrowserRouter future={{ v7_startTransition: true }}>
+      <AppRouter />
+    </BrowserRouter>
   )
 }
 
