@@ -1,5 +1,4 @@
-import React from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Typography } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import styles from './Auth.module.css'
@@ -12,58 +11,87 @@ interface LoginFormValues {
 }
 
 const Auth: React.FC = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>()
+  const [form] = Form.useForm<LoginFormValues>()
+  const [clientReady, setClientReady] = useState<boolean>(false)
 
-  const onSubmit = (data: LoginFormValues) => {
-    console.log(data)
+  useEffect(() => {
+    setClientReady(true)
+  }, [])
+
+  const onFinish = (values: LoginFormValues) => {
+    console.log('Finish:', values)
+  }
+
+  const isFormValid = (): boolean => {
+    return (
+      form.isFieldsTouched(true) &&
+      !form.getFieldsError().filter(({ errors }) => errors.length).length
+    )
   }
 
   return (
     <div className={styles.container}>
-      <Title level={2}>Авторизация</Title>
-      <Form onFinish={handleSubmit(onSubmit)}>
+      <Title level={2} className={styles.title}>
+        Авторизация
+      </Title>
+      <Form
+        form={form}
+        name="horizontal_login"
+        layout="vertical"
+        onFinish={onFinish}
+        className={styles.form}>
         <Form.Item
-          validateStatus={errors.username ? 'error' : ''}
-          help={errors.username?.message}>
-          <Controller
-            name="username"
-            control={control}
-            rules={{ required: 'Имя пользователя обязательно' }}
-            render={({ field }) => (
-              <Input
-                {...field}
-                prefix={<UserOutlined />}
-                placeholder="Имя пользователя"
-              />
-            )}
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: 'Имя пользователя обязательно',
+            },
+            {
+              pattern: /^[a-zA-Z0-9_]{4,16}$/,
+              message:
+                'Логин должен содержать от 4 до 16 символов (латинские буквы, цифры и _)',
+            },
+          ]}
+          className={styles.formItem}>
+          <Input
+            prefix={<UserOutlined />}
+            placeholder="Имя пользователя"
+            className={styles.input}
           />
         </Form.Item>
 
         <Form.Item
-          validateStatus={errors.password ? 'error' : ''}
-          help={errors.password?.message}>
-          <Controller
-            name="password"
-            control={control}
-            rules={{ required: 'Пароль обязателен' }}
-            render={({ field }) => (
-              <Input.Password
-                {...field}
-                prefix={<LockOutlined />}
-                placeholder="Пароль"
-              />
-            )}
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: 'Пароль обязателен',
+            },
+            {
+              pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+              message:
+                'Пароль должен содержать минимум 8 символов, включая буквы и цифры',
+            },
+          ]}
+          className={styles.formItem}>
+          <Input.Password
+            prefix={<LockOutlined />}
+            placeholder="Пароль"
+            className={styles.input}
           />
         </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit" block>
-            Войти
-          </Button>
+        <Form.Item shouldUpdate className={styles.formItem}>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={!isFormValid()}
+              className={styles.button}>
+              Авторизоваться
+            </Button>
+          )}
         </Form.Item>
       </Form>
     </div>
