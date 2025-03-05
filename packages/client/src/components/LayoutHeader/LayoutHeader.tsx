@@ -1,7 +1,7 @@
 import { Header } from 'antd/es/layout/layout'
 import { Menu } from 'antd'
-
 import { Link } from 'react-router-dom'
+import styles from './LayoutHeader.module.css'
 
 const items = [
   {
@@ -49,6 +49,10 @@ function LayoutHeader() {
           </Menu.Item>
         ))}
       </Menu>
+      <div className={styles.header_auth}>
+        <Link to="login">Вход</Link>
+        <Link to="registration">Регистрация</Link>
+      </div>
     </Header>
   )
 }

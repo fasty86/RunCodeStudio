@@ -1,7 +1,7 @@
 import React from 'react'
 import Container from './components/Layout'
-
 import { Route, Routes } from 'react-router-dom'
+import Auth from './pages/Auth/Auth'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -19,7 +19,7 @@ export const routConfig: Record<
 > = {
   [AppRoutes.LOGIN]: {
     path: AppRoutes.LOGIN,
-    element: <></>,
+    element: <Auth></Auth>,
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
