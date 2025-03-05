@@ -2,6 +2,7 @@ import React from 'react'
 import Container from './components/Layout'
 
 import { Route, Routes } from 'react-router-dom'
+import Registration from './pages/Registration/Registration'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -27,7 +28,7 @@ export const routConfig: Record<
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
-    element: <></>,
+    element: <Registration></Registration>,
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
