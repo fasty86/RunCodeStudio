@@ -6,6 +6,8 @@ import Threads from './pages/forum/Threads'
 import Posts from './pages/forum/Posts'
 import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
+import NotFound from './pages/ErrorPages/NotFound'
+import ServerError from './pages/ErrorPages/ServerError'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -51,7 +53,11 @@ export const routConfig: Record<
   },
   NOT_FOUND: {
     path: '*',
-    element: <></>,
+    element: <NotFound />,
+  },
+  SERVER_ERROR: {
+    path: 'server-error',
+    element: <ServerError />,
   },
 }
 
