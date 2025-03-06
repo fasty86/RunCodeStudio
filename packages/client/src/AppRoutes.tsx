@@ -2,6 +2,10 @@ import React from 'react'
 import Container from './components/Layout'
 
 import { Route, Routes } from 'react-router-dom'
+import Threads from './pages/forum/Threads'
+import Posts from './pages/forum/Posts'
+import LeaderBoard from './pages/leaderboard/LeaderBoard'
+import Landing from './pages/Landing/Landing'
 import Registration from './pages/Registration/Registration'
 
 export const AppRoutes = {
@@ -10,7 +14,7 @@ export const AppRoutes = {
   REGISTRATION: 'registration',
   PLAY: 'play',
   FORUM: 'forum',
-  FORUM_TOPIC: 'forum-topic',
+  FORUM_TOPIC: 'forum-topic/:id',
   LEADER_BOARD: 'leader-board',
 }
 
@@ -28,7 +32,7 @@ export const routConfig: Record<
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
-    element: <Registration></Registration>,
+    element: <Registration />,
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
@@ -36,15 +40,15 @@ export const routConfig: Record<
   },
   [AppRoutes.FORUM]: {
     path: AppRoutes.FORUM,
-    element: <></>,
+    element: <Threads />,
   },
   [AppRoutes.FORUM_TOPIC]: {
-    path: AppRoutes.FORUM_TOPIC,
-    element: <></>,
+    path: `${AppRoutes.FORUM}/:id`,
+    element: <Posts />,
   },
   [AppRoutes.LEADER_BOARD]: {
     path: AppRoutes.LEADER_BOARD,
-    element: <></>,
+    element: <LeaderBoard />,
   },
   NOT_FOUND: {
     path: '*',
@@ -57,10 +61,7 @@ const AppRouter = () => {
     <div>
       <Routes>
         <Route path="/" element={<Container />}>
-          <Route
-            index
-            element={<div>Вот тут будет жить ваше приложение :)</div>}
-          />
+          <Route index element={<Landing />} />
           {Object.values(routConfig).map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
