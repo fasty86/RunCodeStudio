@@ -1,5 +1,4 @@
 import React from 'react'
-import { useForm, Controller } from 'react-hook-form'
 import { Form, Input, Button, Typography } from 'antd'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
 import styles from './Registration.module.css'
@@ -14,98 +13,84 @@ interface RegistrationFormValues {
 }
 
 const Registration: React.FC = () => {
-  const {
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<RegistrationFormValues>()
+  const [form] = Form.useForm<RegistrationFormValues>()
 
-  const onSubmit = (data: RegistrationFormValues) => {
-    console.log(data)
+  const onFinish = (values: RegistrationFormValues) => {
+    console.log('Форма отправлена:', values)
+    // Здесь можно добавить логику отправки данных на сервер
   }
 
   return (
     <div className={styles.container}>
       <Title level={2}>Регистрация</Title>
-      <Form onFinish={handleSubmit(onSubmit)}>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        layout="vertical"
+        initialValues={{
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        }}>
         <Form.Item
-          validateStatus={errors.username ? 'error' : ''}
-          help={errors.username?.message}>
-          <Controller
-            name="username"
-            control={control}
-            rules={{ required: 'Имя пользователя обязательно' }}
-            render={({ field }) => (
-              <Input
-                {...field}
-                prefix={<UserOutlined />}
-                placeholder="Имя пользователя"
-              />
-            )}
-          />
+          name="username"
+          label="Имя пользователя"
+          rules={[
+            { required: true, message: 'Имя пользователя обязательно' },
+            {
+              pattern: /^[a-zA-Z0-9_]{4,16}$/,
+              message:
+                'Логин должен содержать от 4 до 16 символов (латинские буквы, цифры и _)',
+            },
+          ]}>
+          <Input prefix={<UserOutlined />} placeholder="Имя пользователя" />
         </Form.Item>
 
         <Form.Item
-          validateStatus={errors.email ? 'error' : ''}
-          help={errors.email?.message}>
-          <Controller
-            name="email"
-            control={control}
-            rules={{
-              required: 'Email обязателен',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: 'Некорректный email',
+          name="email"
+          label="Email"
+          rules={[
+            { required: true, message: 'Email обязателен' },
+            {
+              type: 'email',
+              message: 'Некорректный email',
+            },
+          ]}>
+          <Input prefix={<MailOutlined />} placeholder="Email" />
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          label="Пароль"
+          rules={[
+            { required: true, message: 'Пароль обязателен' },
+            {
+              min: 6,
+              message: 'Пароль должен быть не менее 6 символов',
+            },
+          ]}>
+          <Input.Password prefix={<LockOutlined />} placeholder="Пароль" />
+        </Form.Item>
+
+        <Form.Item
+          name="confirmPassword"
+          label="Подтвердите пароль"
+          dependencies={['password']}
+          rules={[
+            { required: true, message: 'Подтверждение пароля обязательно' },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve()
+                }
+                return Promise.reject(new Error('Пароли не совпадают'))
               },
-            }}
-            render={({ field }) => (
-              <Input {...field} prefix={<MailOutlined />} placeholder="Email" />
-            )}
-          />
-        </Form.Item>
-
-        <Form.Item
-          validateStatus={errors.password ? 'error' : ''}
-          help={errors.password?.message}>
-          <Controller
-            name="password"
-            control={control}
-            rules={{
-              required: 'Пароль обязателен',
-              minLength: {
-                value: 6,
-                message: 'Пароль должен быть не менее 6 символов',
-              },
-            }}
-            render={({ field }) => (
-              <Input.Password
-                {...field}
-                prefix={<LockOutlined />}
-                placeholder="Пароль"
-              />
-            )}
-          />
-        </Form.Item>
-
-        <Form.Item
-          validateStatus={errors.confirmPassword ? 'error' : ''}
-          help={errors.confirmPassword?.message}>
-          <Controller
-            name="confirmPassword"
-            control={control}
-            rules={{
-              required: 'Подтверждение пароля обязательно',
-              validate: value =>
-                value === watch('password') || 'Пароли не совпадают',
-            }}
-            render={({ field }) => (
-              <Input.Password
-                {...field}
-                prefix={<LockOutlined />}
-                placeholder="Подтвердите пароль"
-              />
-            )}
+            }),
+          ]}>
+          <Input.Password
+            prefix={<LockOutlined />}
+            placeholder="Подтвердите пароль"
           />
         </Form.Item>
 
