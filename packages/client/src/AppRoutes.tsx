@@ -24,7 +24,7 @@ export const routConfig: Record<
 > = {
   [AppRoutes.LOGIN]: {
     path: AppRoutes.LOGIN,
-    element: <Auth></Auth>,
+    element: <Auth />,
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
