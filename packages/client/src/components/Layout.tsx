@@ -25,12 +25,13 @@ function Container() {
       <LayoutHeader />
       <Content
         className={styles['layout-container']}
-        style={{ padding: '0 10px', overflowY: 'auto' }}>
+        style={{ overflowY: 'auto' }}>
         <div
           style={{
             background: colorBgContainer,
             minHeight: '100%',
             borderRadius: borderRadiusLG,
+            height: '100%',
           }}>
           <Outlet />
         </div>
