@@ -1,7 +1,8 @@
 import React from 'react'
-import { Form, Input, Button, Typography } from 'antd'
+import { Form, Input, Button, Typography, Flex } from 'antd'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
 import styles from './Registration.module.css'
+import { VALIDATION_RULES, VALIDATION_MESSAGES } from '../../utils/validation'
 
 const { Title } = Typography
 
@@ -21,9 +22,14 @@ const Registration: React.FC = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <Flex
+      vertical={true}
+      justify={'center'}
+      align={'center'}
+      className={styles.container}>
       <Title level={2}>Регистрация</Title>
       <Form
+        className={styles.form}
         form={form}
         onFinish={onFinish}
         layout="vertical"
@@ -39,9 +45,8 @@ const Registration: React.FC = () => {
           rules={[
             { required: true, message: 'Имя пользователя обязательно' },
             {
-              pattern: /^[a-zA-Z0-9_]{4,16}$/,
-              message:
-                'Логин должен содержать от 4 до 16 символов (латинские буквы, цифры и _)',
+              pattern: VALIDATION_RULES.username,
+              message: VALIDATION_MESSAGES.username,
             },
           ]}>
           <Input prefix={<UserOutlined />} placeholder="Имя пользователя" />
@@ -54,7 +59,8 @@ const Registration: React.FC = () => {
             { required: true, message: 'Email обязателен' },
             {
               type: 'email',
-              message: 'Некорректный email',
+              pattern: VALIDATION_RULES.email,
+              message: VALIDATION_MESSAGES.email,
             },
           ]}>
           <Input prefix={<MailOutlined />} placeholder="Email" />
@@ -66,8 +72,8 @@ const Registration: React.FC = () => {
           rules={[
             { required: true, message: 'Пароль обязателен' },
             {
-              min: 6,
-              message: 'Пароль должен быть не менее 6 символов',
+              pattern: VALIDATION_RULES.password,
+              message: VALIDATION_MESSAGES.password,
             },
           ]}>
           <Input.Password prefix={<LockOutlined />} placeholder="Пароль" />
@@ -100,7 +106,7 @@ const Registration: React.FC = () => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </Flex>
   )
 }
 
