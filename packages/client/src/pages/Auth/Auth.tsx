@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Typography } from 'antd'
+import { Form, Input, Button, Typography, Flex } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import styles from './Auth.module.css'
 
@@ -30,10 +30,13 @@ const Auth: React.FC = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <Title level={2} className={styles.title}>
-        Авторизация
-      </Title>
+    <Flex
+      vertical={true}
+      justify={'center'}
+      align={'center'}
+      className={styles.container}
+    >
+      <Title level={2}>Авторизация</Title>
       <Form
         form={form}
         name="horizontal_login"
@@ -46,12 +49,7 @@ const Auth: React.FC = () => {
             {
               required: true,
               message: 'Имя пользователя обязательно',
-            },
-            {
-              pattern: /^[a-zA-Z0-9_]{4,16}$/,
-              message:
-                'Логин должен содержать от 4 до 16 символов (латинские буквы, цифры и _)',
-            },
+            }
           ]}
           className={styles.formItem}>
           <Input
@@ -67,12 +65,7 @@ const Auth: React.FC = () => {
             {
               required: true,
               message: 'Пароль обязателен',
-            },
-            {
-              pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-              message:
-                'Пароль должен содержать минимум 8 символов, включая буквы и цифры',
-            },
+            }
           ]}
           className={styles.formItem}>
           <Input.Password
@@ -85,16 +78,18 @@ const Auth: React.FC = () => {
         <Form.Item shouldUpdate className={styles.formItem}>
           {() => (
             <Button
+              block
               type="primary"
               htmlType="submit"
               disabled={!isFormValid()}
-              className={styles.button}>
+              className={styles.button}
+            >
               Авторизоваться
             </Button>
           )}
         </Form.Item>
       </Form>
-    </div>
+    </Flex>
   )
 }
 
