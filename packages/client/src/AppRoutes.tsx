@@ -8,6 +8,7 @@ import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
+import Registration from './pages/Registration/Registration'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -33,7 +34,7 @@ export const routConfig: Record<
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
-    element: <></>,
+    element: <Registration />,
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
