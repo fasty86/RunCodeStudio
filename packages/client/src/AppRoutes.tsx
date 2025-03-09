@@ -9,6 +9,9 @@ import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
+// только для демонстрации
+// TODO: удалить
+import GameStart from './pages/Game/GameStart/GameStart'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -18,6 +21,9 @@ export const AppRoutes = {
   FORUM: 'forum',
   FORUM_TOPIC: 'forum-topic/:id',
   LEADER_BOARD: 'leader-board',
+  // только для демонстрации
+  // TODO: удалить
+  GAME_START: 'game-start',
 }
 
 export const routConfig: Record<
@@ -59,6 +65,12 @@ export const routConfig: Record<
   SERVER_ERROR: {
     path: 'server-error',
     element: <ServerError />,
+  },
+  // только для демонстрации
+  // TODO: удалить
+  GAME_START: {
+    path: 'game-start',
+    element: <GameStart />,
   },
 }
 
