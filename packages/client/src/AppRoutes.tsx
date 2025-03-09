@@ -9,6 +9,7 @@ import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
+import CanvasGame from './pages/Game/CanvasGame/CanvasGame'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -38,7 +39,7 @@ export const routConfig: Record<
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
-    element: <></>,
+    element: <CanvasGame />,
   },
   [AppRoutes.FORUM]: {
     path: AppRoutes.FORUM,

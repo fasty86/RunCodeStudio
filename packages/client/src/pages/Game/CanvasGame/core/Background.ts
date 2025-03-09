@@ -1,4 +1,4 @@
-import { ThemeProps, GameSettings, TypeDataTheme } from '../types'
+import { EntityProps, GameSettings, TypeDataTheme } from '../types'
 import { getThemeSprite } from './sprites'
 
 export class Backgournd {
@@ -7,15 +7,15 @@ export class Backgournd {
   settings: GameSettings
   width: number
   height: number
-  gameSpeed: number
+  speed: number
 
-  constructor(props: ThemeProps) {
+  constructor(props: EntityProps) {
     const { ctx, settings } = props
     this.ctx = ctx
     this.themesImages = getThemeSprite(settings.themeId)
     this.width = 2400
     this.height = this.themesImages[0].image.height
-    this.gameSpeed = settings.speed
+    this.speed = settings.speed
     this.settings = settings
   }
 
@@ -33,10 +33,11 @@ export class Backgournd {
       props.x = 0
     }
 
-    props.x -= this.gameSpeed * props.speedModifier
+    props.x -= Math.floor(this.speed * props.speedModifier)
   }
 
-  animation = () => {
+  animation = (speedGame: number) => {
+    this.speed = speedGame || this.speed
     this.themesImages.forEach(layer => {
       this.draw(layer)
     })

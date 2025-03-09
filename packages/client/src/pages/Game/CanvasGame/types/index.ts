@@ -19,6 +19,12 @@ export interface PlayerSpriteData {
   animations: PlayerAnimations
 }
 
+export interface TypeDataTheme {
+  image: HTMLImageElement
+  x: number
+  speedModifier: number
+}
+
 //game
 export type GameSettings = {
   playerId: string
@@ -30,20 +36,14 @@ export type GameSettings = {
   bgOfsetY: 120
 }
 
-//player
-export interface PlayerProps {
+//Общие пропсы
+export interface EntityProps {
   ctx: CanvasRenderingContext2D
   settings: GameSettings
+  x?: number
+  y?: number
 }
 
-//coin
-export type CoinProps = PlayerProps
-
-//theme
-export type ThemeProps = PlayerProps
-
-export interface TypeDataTheme {
-  image: HTMLImageElement
-  x: number
-  speedModifier: number
+export interface GameObject {
+  getBounds(): { x: number; y: number; width: number; height: number }
 }

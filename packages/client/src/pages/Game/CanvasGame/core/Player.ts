@@ -1,7 +1,7 @@
 import {
   GameSettings,
   PlayerAnimations,
-  PlayerProps,
+  EntityProps,
   PlayerSpriteData,
 } from '../types'
 import { getPlayerSprite } from './sprites'
@@ -12,6 +12,7 @@ export class Player {
   private frameWidth: number
   private frameHeight: number
   private staggerFrame: number
+  private speed: number
   private frameX = 0
   private frames = 0
   private frameY = 0
@@ -19,28 +20,29 @@ export class Player {
   private sprite: PlayerSpriteData
   private playerImage: HTMLImageElement
   private velocityY = 0
-  private gravity = 0.2
+  private gravity = 0.3
   private isJumping = false
   private defaultY: number
   private y: number
   private x: number
 
-  constructor(props: PlayerProps) {
+  constructor(props: EntityProps) {
     const { ctx, settings } = props
 
     this.ctx = ctx
     this.sprite = getPlayerSprite(settings.playerId)
 
     this.settings = settings
-    this.staggerFrame = 5 + (5 - settings.speed)
+    this.speed = this.settings.speed
+    this.staggerFrame = 5 + (5 - this.speed)
     this.playerImage = this.sprite.image
     this.frameWidth = this.sprite.frameWidth
     this.frameHeight = this.sprite.frameHeight
 
-    this.x = 24
     this.defaultY =
       this.settings.canvasHeight - (this.frameHeight + this.settings.bgOfsetY)
-    this.y = this.defaultY //тут подогнал 120 - высота земли, (пока не понял как найти)
+    this.x = 24
+    this.y = this.defaultY
 
     document.addEventListener('keydown', this._events)
 
@@ -59,9 +61,9 @@ export class Player {
     if (e.code === 'Space' && !this.isJumping) {
       this.velocityY = -10
       this.isJumping = true
+      const timeJump = (this.velocityY / this.gravity) * -1 * 2 // анимации прыжка проигрывается за это время
       this.setAnimation('jump')
-      this.frameX = 0
-      this.frames = 12
+      this.staggerFrame = Math.round(timeJump / this.frames) // кадр анимации прыжка меняется раз в это время
     }
 
     if (e.code === 'KeyK') {
@@ -88,7 +90,8 @@ export class Player {
     }
   }
 
-  animation = () => {
+  animation = (speedGame: number) => {
+    this.speed = speedGame | this.speed
     this.frameX = Math.floor((this.gameFrame / this.staggerFrame) % this.frames)
     // console.log(this.frames)
     this.drawJump()
@@ -114,6 +117,15 @@ export class Player {
       y: this.y,
       width: this.frameWidth,
       height: this.frameHeight,
+    }
+  }
+
+  getOffset() {
+    //подогнанные значения под фрейм (по сути для каждой анимации run, jump и т/д должны быть свои значения)
+    return {
+      offestRightX: 44,
+      offsetLeftX: 76,
+      offsetTopY: 50,
     }
   }
 }
