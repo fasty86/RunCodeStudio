@@ -22,13 +22,6 @@ const Auth: React.FC = () => {
     console.log('Finish:', values)
   }
 
-  const isFormValid = (): boolean => {
-    return (
-      form.isFieldsTouched(true) &&
-      !form.getFieldsError().filter(({ errors }) => errors.length).length
-    )
-  }
-
   return (
     <Flex
       vertical={true}
@@ -81,7 +74,6 @@ const Auth: React.FC = () => {
               block
               type="primary"
               htmlType="submit"
-              disabled={!isFormValid()}
               className={styles.button}
             >
               Авторизоваться
