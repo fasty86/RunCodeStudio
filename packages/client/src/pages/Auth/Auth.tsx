@@ -27,8 +27,7 @@ const Auth: React.FC = () => {
       vertical={true}
       justify={'center'}
       align={'center'}
-      className={styles.container}
-    >
+      className={styles.container}>
       <Title level={2}>Авторизация</Title>
       <Form
         form={form}
@@ -42,7 +41,7 @@ const Auth: React.FC = () => {
             {
               required: true,
               message: 'Имя пользователя обязательно',
-            }
+            },
           ]}
           className={styles.formItem}>
           <Input
@@ -58,7 +57,7 @@ const Auth: React.FC = () => {
             {
               required: true,
               message: 'Пароль обязателен',
-            }
+            },
           ]}
           className={styles.formItem}>
           <Input.Password
@@ -74,8 +73,7 @@ const Auth: React.FC = () => {
               block
               type="primary"
               htmlType="submit"
-              className={styles.button}
-            >
+              className={styles.button}>
               Авторизоваться
             </Button>
           )}
