@@ -10,6 +10,7 @@ import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
 import CanvasGame from './pages/Game/CanvasGame/CanvasGame'
+import Auth from './pages/Auth/Auth'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -27,7 +28,7 @@ export const routConfig: Record<
 > = {
   [AppRoutes.LOGIN]: {
     path: AppRoutes.LOGIN,
-    element: <></>,
+    element: <Auth />,
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
