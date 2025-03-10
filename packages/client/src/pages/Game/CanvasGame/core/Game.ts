@@ -4,6 +4,8 @@ import { Coin } from './Coin'
 import { Obstacle } from './Obstacle'
 import { Player } from './Player'
 
+type IntervalType = ReturnType<typeof setInterval>
+
 export class Game {
   private canvas: HTMLCanvasElement
   private ctx: CanvasRenderingContext2D
@@ -12,9 +14,9 @@ export class Game {
   private obstacles: Obstacle[] = []
   private coins: Coin[] = []
   animationFrameId: number | null
-  intervalObstaclesId: ReturnType<typeof setInterval>
-  intervalCoinsId: ReturnType<typeof setInterval>
-  intervalTimerId: ReturnType<typeof setInterval>
+  intervalObstaclesId: IntervalType
+  intervalCoinsId: IntervalType
+  intervalTimerId: IntervalType
   startGame = false
   isEndGame = false
   settings: GameSettings

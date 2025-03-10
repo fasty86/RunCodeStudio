@@ -1,19 +1,19 @@
 import { EntityProps, GameSettings } from '../types'
 
 export class Coin {
-  ctx: CanvasRenderingContext2D
-  settings: GameSettings
-  iamgeCoin: HTMLImageElement
-  width: number
-  height: number
-  frameX = 0
-  frames = 4
-  frameWidth: number
-  gameFrame = 0
-  positionY: number
-  y: number
-  x: number
-  speed: number
+  private ctx: CanvasRenderingContext2D
+  private settings: GameSettings
+  private iamgeCoin: HTMLImageElement
+  private width: number
+  private height: number
+  private frameX = 0
+  private frames = 4
+  private frameWidth: number
+  private gameFrame = 0
+  private positionY: number
+  private y: number
+  private x: number
+  private speed: number
 
   constructor(props: EntityProps) {
     const { ctx, settings, x = 2000, y = 0 } = props
@@ -33,7 +33,7 @@ export class Coin {
   }
 
   animation(gameSpeed: number) {
-    this.speed = gameSpeed | this.speed
+    this.speed = gameSpeed || this.speed
     this.frameX = Math.floor((this.gameFrame / 10) % this.frames)
 
     this.ctx.drawImage(
