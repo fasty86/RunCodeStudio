@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 export type User = {
+  id: number
   name: string
   isAuthenticated: boolean
 }
