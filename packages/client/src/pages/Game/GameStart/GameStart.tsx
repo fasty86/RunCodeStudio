@@ -1,39 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Flex, Typography } from 'antd'
 import { Button } from '../../../components/Button/Button'
-import { AppRoutes } from '../../../AppRoutes'
 import CharacterChoice from './components/CharacterChoice/CharacterChoice'
 import Rules from './components/Rules'
-import styles from './GameStart.module.css'
+import { secondsWords } from '../../../utils/singlePluralWords'
 
-const GameStart: React.FC = () => {
-  const navigate = useNavigate()
+interface GameStartProps {
+  onStart: VoidFunction
+  selectedCharacter: string
+  setSelectedCharacter: (characterId: string) => void
+}
 
-  const [countdown, setCountdown] = useState(60)
-  const [isCounting, setIsCounting] = useState(true)
+const GameStart = ({
+  onStart,
+  selectedCharacter,
+  setSelectedCharacter,
+}: GameStartProps) => {
+  const [showCountdown, setShowCountdown] = useState(false)
+  const [countdown, setCountdown] = useState(3)
 
   useEffect(() => {
-    if (!isCounting) return
+    if (!showCountdown) return
     const timer = setInterval(() => {
       setCountdown(prev => prev - 1)
     }, 1000)
     return () => clearInterval(timer)
-  }, [isCounting])
-  useEffect(() => {
-    if (countdown === 0 && isCounting) {
-      handleStartGame()
-    }
-  }, [countdown, isCounting])
+  }, [showCountdown])
 
-  const handleStartGame = () => {
-    setIsCounting(false)
-    // для демонстрации переходим на /play
-    // TODO: удалить, когда будет написана сама игра
-    navigate('/' + AppRoutes.PLAY)
-  }
-  const handleStopCountdown = () => {
-    setIsCounting(false)
+  useEffect(() => {
+    if (countdown === 0 && showCountdown) {
+      onStart()
+    }
+  }, [countdown, showCountdown, onStart])
+
+  const handleStartClick = () => {
+    setCountdown(3)
+    setShowCountdown(true)
   }
 
   return (
@@ -41,25 +43,21 @@ const GameStart: React.FC = () => {
       <Typography.Title style={{ color: '#fff' }}>
         Подготовка к игре
       </Typography.Title>
-      <Flex gap="small" align="center">
-        {isCounting ? (
-          <Typography.Text style={{ color: '#fff' }}>
-            Игра начнётся через: <strong>{countdown}</strong>
-          </Typography.Text>
-        ) : (
-          <Typography.Text style={{ color: '#fff' }}>
-            Отсчёт остановлен
-          </Typography.Text>
-        )}
-        {isCounting && (
-          <div className={styles.stopButton}>
-            <Button onClick={handleStopCountdown}>Стоп</Button>
-          </div>
-        )}
-      </Flex>
-      <CharacterChoice />
-      <Rules />
-      <Button onClick={handleStartGame}>Старт</Button>
+      {!showCountdown && (
+        <>
+          <CharacterChoice
+            selected={selectedCharacter}
+            onSelect={setSelectedCharacter}
+          />
+          <Rules />
+          <Button onClick={handleStartClick}>Старт</Button>
+        </>
+      )}
+      {showCountdown && (
+        <Typography.Text style={{ color: '#fff', fontSize: '24px' }}>
+          Игра начнётся через {countdown} {secondsWords(countdown)}
+        </Typography.Text>
+      )}
     </Flex>
   )
 }
