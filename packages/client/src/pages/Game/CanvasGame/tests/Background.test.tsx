@@ -1,5 +1,4 @@
 import { Backgournd } from '../core/Background'
-import { getThemeSprite } from '../core/sprites'
 
 import { EntityProps, GameSettings, TypeDataTheme } from '../types'
 
