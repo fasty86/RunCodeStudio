@@ -38,11 +38,7 @@ export const routConfig: Record<
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
-    element: (
-      <ErrorBoundary>
-        <Profile />
-      </ErrorBoundary>
-    ),
+    element: <Profile />,
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
