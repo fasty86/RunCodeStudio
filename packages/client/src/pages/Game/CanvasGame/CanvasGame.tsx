@@ -1,20 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Game } from './core/Game'
 import style from './game.module.css'
-import { Button } from 'antd'
 
-const CanvasGame = () => {
-  const [isEnd, setIsEnd] = useState<boolean>(false)
-  const [isStart, setIsStart] = useState<boolean>(true)
-  const [gameKey, setGameKey] = useState(0)
+interface CanvasGameProps {
+  characterId: string
+  onGameOver: VoidFunction
+  onCoinsChange: (coins: number) => void
+}
+
+const CanvasGame = ({
+  characterId,
+  onGameOver,
+  onCoinsChange,
+}: CanvasGameProps) => {
   const ref = useRef<HTMLCanvasElement | null>(null)
   const refGame = useRef<Game | null>(null)
-
-  const handleStartGame = () => {
-    setIsEnd(false)
-    setIsStart(true)
-    setGameKey(prev => prev + 1)
-  }
 
   useEffect(() => {
     const canvas = ref.current
@@ -25,7 +25,7 @@ const CanvasGame = () => {
     }
 
     const game = new Game(canvas, {
-      playerId: 'player_1',
+      playerId: characterId,
       themeId: 'theme_1',
       canvasWidth: window.innerWidth,
       canvasHeight: 720,
@@ -36,27 +36,19 @@ const CanvasGame = () => {
 
     refGame.current = game
 
-    game.onGameOver(isEnd => {
-      setIsStart(false)
-      setIsEnd(isEnd)
+    game.onGameOver(() => {
+      onGameOver()
+      onCoinsChange(game.getCoins())
     })
 
     return () => {
       game.destroy()
     }
-  }, [gameKey])
+  }, [characterId, onGameOver, onCoinsChange])
 
   return (
     <>
-      {isStart && (
-        <canvas key={gameKey} className={style.canvas} ref={ref}></canvas>
-      )}
-      {isEnd && (
-        <>
-          <h2>Конец игры</h2>
-          <Button onClick={handleStartGame}>Начать сначала</Button>
-        </>
-      )}
+      <canvas className={style.canvas} ref={ref}></canvas>
     </>
   )
 }

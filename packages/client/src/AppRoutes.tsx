@@ -9,8 +9,10 @@ import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
-import CanvasGame from './pages/Game/CanvasGame/CanvasGame'
+import Profile from './pages/profile/Profile'
+import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
+import ErrorBoundary from './components/ErrorBoundary'
 
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./hooks/useAuth";
@@ -31,44 +33,76 @@ export const routConfig: Record<
 > = {
   [AppRoutes.LOGIN]: {
     path: AppRoutes.LOGIN,
-    element: <Auth />,
+    element: (
+      <ErrorBoundary>
+        <Auth />
+      </ErrorBoundary>
+    ),
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
-    element: <></>,
+    element: <Profile />,
     isProtected: true,
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
-    element: <Registration />,
+    element: (
+      <ErrorBoundary>
+        <Registration />
+      </ErrorBoundary>
+    ),
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
-    element: <CanvasGame />,
+    element: (
+      <ErrorBoundary>
+        <GameMain />
+      </ErrorBoundary>
+    ),
     isProtected: true,
   },
   [AppRoutes.FORUM]: {
     path: AppRoutes.FORUM,
-    element: <Threads />,
+    element: (
+      <ErrorBoundary>
+        <Threads />
+      </ErrorBoundary>
+    ),
     isProtected: true,
   },
   [AppRoutes.FORUM_TOPIC]: {
     path: `${AppRoutes.FORUM}/:id`,
-    element: <Posts />,
+    element: (
+      <ErrorBoundary>
+        <Posts />
+      </ErrorBoundary>
+    ),
     isProtected: true,
   },
   [AppRoutes.LEADER_BOARD]: {
     path: AppRoutes.LEADER_BOARD,
-    element: <LeaderBoard />,
+    element: (
+      <ErrorBoundary>
+        <LeaderBoard />
+      </ErrorBoundary>
+    ),
     isProtected: true,
   },
   NOT_FOUND: {
     path: '*',
-    element: <NotFound />,
+    element: (
+      <ErrorBoundary>
+        <NotFound />
+      </ErrorBoundary>
+    ),
   },
   SERVER_ERROR: {
     path: 'server-error',
-    element: <ServerError />,
+    element: (
+      <ErrorBoundary>
+        <ServerError />
+      </ErrorBoundary>
+    ),
   },
 }
 

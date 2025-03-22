@@ -4,13 +4,13 @@ import {
   TypeDataTheme,
 } from './../types/index'
 
-const createSpriteData = (
+export const createSpriteData = (
   frameX: number,
   frameY: number,
   frames: number
 ): SpriteFrameData => ({ frameX, frameY, frames })
 
-const createPlayerSprite = (
+export const createPlayerSprite = (
   playerName: string,
   runFrames: number,
   jumpFrames: number,
@@ -33,7 +33,7 @@ const createPlayerSprite = (
   }
 }
 
-const createThemeData = (themeName: string, countLayers: number) => {
+export const createThemeData = (themeName: string, countLayers: number) => {
   return Array.from({ length: countLayers }).map((_, index) => {
     const image = new Image()
     image.src = `/sprite/themes/${themeName}/layer-${index + 1}.png`
