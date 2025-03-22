@@ -14,8 +14,8 @@ import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 
-import { ProtectedRoute } from "./components/ProtectedRoute";
-import { AuthProvider } from "./hooks/useAuth";
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { AuthProvider } from './hooks/useAuth'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -29,7 +29,7 @@ export const AppRoutes = {
 
 export const routConfig: Record<
   string,
-  { path: string; element: React.JSX.Element, isProtected?: boolean }
+  { path: string; element: React.JSX.Element; isProtected?: boolean }
 > = {
   [AppRoutes.LOGIN]: {
     path: AppRoutes.LOGIN,
@@ -113,16 +113,24 @@ const AppRouter = () => {
         <Routes>
           <Route path="/" element={<Container />}>
             <Route index element={<Landing />} />
-            {Object.values(routConfig).map(({ path, element, isProtected = false }) => (
-              <Route
-                key={path}
-                path={path}
-                element={ isProtected ? <ProtectedRoute>{element}</ProtectedRoute> : element } />
-            ))}
+            {Object.values(routConfig).map(
+              ({ path, element, isProtected = false }) => (
+                <Route
+                  key={path}
+                  path={path}
+                  element={
+                    isProtected ? (
+                      <ProtectedRoute>{element}</ProtectedRoute>
+                    ) : (
+                      element
+                    )
+                  }
+                />
+              )
+            )}
           </Route>
         </Routes>
       </AuthProvider>
-
     </div>
   )
 }
