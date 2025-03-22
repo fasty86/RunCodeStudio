@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { useSignInUserMutation } from '../../store/features/user/userApiSlice'
 
 import styles from './Auth.module.css'
+import { isErrorResponse } from '../../utils/typeguard/isErrorResponse'
 
 const { Title } = Typography
 
