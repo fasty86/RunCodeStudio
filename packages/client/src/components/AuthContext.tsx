@@ -4,12 +4,14 @@ import { useLocalStorage } from '../hooks/useLocalStorage'
 import { User, AuthContextType, AuthProviderProps } from '../types'
 import { useLogoutUserMutation } from '../store/features/user/userApiSlice'
 
+type UserOrNull = User | null
+
 // Создаем контекст
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 // Создаем провайдер
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useLocalStorage('user', null)
+  const [user, setUser] = useLocalStorage<UserOrNull>('user', null)
   const navigate = useNavigate()
   const [logoutUser] = useLogoutUserMutation()
 
