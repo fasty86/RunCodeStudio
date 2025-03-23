@@ -15,7 +15,7 @@ import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
-import { AuthProvider } from './hooks/useAuth'
+import { AuthProvider } from './components/AuthContext'
 
 export const AppRoutes = {
   LOGIN: 'login',

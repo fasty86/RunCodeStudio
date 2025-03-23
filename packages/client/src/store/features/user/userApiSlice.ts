@@ -37,10 +37,20 @@ export const userApiSlice = createApi({
           accept: 'application/json',
         },
         body: data,
+        responseHandler: response =>
+          response.status === 200 ? response.text() : response.json(),
       }),
-      transformResponse: () => ({ ok: true }),
-      transformErrorResponse: response => console.log(response.status),
-
+      invalidatesTags: ['user'],
+    }),
+    logoutUser: builder.mutation<UserProfile, unknown>({
+      query: () => ({
+        url: `${PractikumEndpoints.AUTH}/logout`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+      }),
       invalidatesTags: ['user'],
     }),
     updateUserAvatar: builder.mutation<UserProfile | BadRequest, FormData>({
@@ -99,6 +109,7 @@ export const userApiSlice = createApi({
 export const {
   useGetUserQuery,
   useSignInUserMutation,
+  useLogoutUserMutation,
   useUpdateUserAvatarMutation,
   useUpdateUserInfoMutation,
   useUpdateUserPasswordMutation,
