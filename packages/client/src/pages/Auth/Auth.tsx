@@ -16,7 +16,7 @@ interface LoginFormValues {
 const Auth = () => {
   const [messageApi, contextHolder] = message.useMessage()
   const [form] = Form.useForm<LoginFormValues>()
-  const [signIn, { isError, isSuccess, error, data }] = useSignInUserMutation()
+  const [signIn, { isError, isSuccess, error }] = useSignInUserMutation()
   const [userName, setUserName] = useState('')
   const { login } = useAuth()
 
@@ -36,7 +36,6 @@ const Auth = () => {
     }
     if (isSuccess) {
       messageApi.success('Данные сохранены')
-      console.log(`isSuccess: ${data}`)
       login({ name: userName, isAuthenticated: true })
     }
   }, [isError, error, isSuccess])
