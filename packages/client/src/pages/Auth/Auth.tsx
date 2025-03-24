@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Typography, Flex } from 'antd'
+import { Form, Input, Button, Typography, Flex, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { useAuth } from '../../hooks/useAuth'
+import { useSignInUserMutation } from '../../store/features/user/userApiSlice'
+
 import styles from './Auth.module.css'
 
 const { Title } = Typography
@@ -10,17 +13,32 @@ interface LoginFormValues {
   password: string
 }
 
-const Auth: React.FC = () => {
+const Auth = () => {
+  const [messageApi, contextHolder] = message.useMessage()
   const [form] = Form.useForm<LoginFormValues>()
-  const [clientReady, setClientReady] = useState<boolean>(false)
+  const [signIn, { isError, isSuccess, error }] = useSignInUserMutation()
+  const [userName, setUserName] = useState('')
+  const { login } = useAuth()
+
+  const onFinish = async (values: LoginFormValues) => {
+    const { username, password } = values
+    setUserName(username)
+    signIn({ login: username, password })
+  }
 
   useEffect(() => {
-    setClientReady(true)
-  }, [])
-
-  const onFinish = (values: LoginFormValues) => {
-    console.info('Finish:', values)
-  }
+    if (isError) {
+      const errorData = (error as { data: { reason: string } })?.data
+      if (errorData && errorData.reason === 'User already in system') {
+        login({ name: 'serghey', isAuthenticated: true })
+      }
+      messageApi.error(errorData?.reason || 'Ошибка, попробуйте еще раз')
+    }
+    if (isSuccess) {
+      messageApi.success('Данные сохранены')
+      login({ name: userName, isAuthenticated: true })
+    }
+  }, [isError, error, isSuccess])
 
   return (
     <Flex
@@ -29,6 +47,7 @@ const Auth: React.FC = () => {
       align={'center'}
       className={styles.container}>
       <Title level={2}>Авторизация</Title>
+      {contextHolder}
       <Form
         form={form}
         name="horizontal_login"

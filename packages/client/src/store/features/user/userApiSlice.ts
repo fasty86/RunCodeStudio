@@ -3,6 +3,7 @@ import {
   BadRequest,
   ErrorResponse,
   PractikumEndpoints,
+  UserLoginType,
   UserProfile,
 } from './types'
 import { isBadRequest } from '../../../utils/typeguard/isBadRequest'
@@ -26,6 +27,31 @@ export const userApiSlice = createApi({
       transformErrorResponse: response => console.info(response.status),
 
       providesTags: ['user'],
+    }),
+    signInUser: builder.mutation<UserLoginType | BadRequest, UserLoginType>({
+      query: data => ({
+        url: `${PractikumEndpoints.AUTH}/signin`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: data,
+        responseHandler: response =>
+          response.status === 200 ? response.text() : response.json(),
+      }),
+      invalidatesTags: ['user'],
+    }),
+    logoutUser: builder.mutation<UserProfile, unknown>({
+      query: () => ({
+        url: `${PractikumEndpoints.AUTH}/logout`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+      }),
+      invalidatesTags: ['user'],
     }),
     updateUserAvatar: builder.mutation<UserProfile | BadRequest, FormData>({
       query: avatar => ({
@@ -82,6 +108,8 @@ export const userApiSlice = createApi({
 
 export const {
   useGetUserQuery,
+  useSignInUserMutation,
+  useLogoutUserMutation,
   useUpdateUserAvatarMutation,
   useUpdateUserInfoMutation,
   useUpdateUserPasswordMutation,

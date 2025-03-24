@@ -14,6 +14,9 @@ import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { AuthProvider } from './components/AuthContext'
+
 export const AppRoutes = {
   LOGIN: 'login',
   PROFILE: 'profile',
@@ -26,7 +29,7 @@ export const AppRoutes = {
 
 export const routConfig: Record<
   string,
-  { path: string; element: React.JSX.Element }
+  { path: string; element: React.JSX.Element; isProtected?: boolean }
 > = {
   [AppRoutes.LOGIN]: {
     path: AppRoutes.LOGIN,
@@ -39,6 +42,7 @@ export const routConfig: Record<
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
     element: <Profile />,
+    isProtected: true,
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
@@ -55,6 +59,7 @@ export const routConfig: Record<
         <GameMain />
       </ErrorBoundary>
     ),
+    isProtected: true,
   },
   [AppRoutes.FORUM]: {
     path: AppRoutes.FORUM,
@@ -63,6 +68,7 @@ export const routConfig: Record<
         <Threads />
       </ErrorBoundary>
     ),
+    isProtected: true,
   },
   [AppRoutes.FORUM_TOPIC]: {
     path: `${AppRoutes.FORUM}/:id`,
@@ -71,6 +77,7 @@ export const routConfig: Record<
         <Posts />
       </ErrorBoundary>
     ),
+    isProtected: true,
   },
   [AppRoutes.LEADER_BOARD]: {
     path: AppRoutes.LEADER_BOARD,
@@ -79,6 +86,7 @@ export const routConfig: Record<
         <LeaderBoard />
       </ErrorBoundary>
     ),
+    isProtected: true,
   },
   NOT_FOUND: {
     path: '*',
@@ -101,14 +109,28 @@ export const routConfig: Record<
 const AppRouter = () => {
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<Container />}>
-          <Route index element={<Landing />} />
-          {Object.values(routConfig).map(({ path, element }) => (
-            <Route key={path} path={path} element={element} />
-          ))}
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Container />}>
+            <Route index element={<Landing />} />
+            {Object.values(routConfig).map(
+              ({ path, element, isProtected = false }) => (
+                <Route
+                  key={path}
+                  path={path}
+                  element={
+                    isProtected ? (
+                      <ProtectedRoute>{element}</ProtectedRoute>
+                    ) : (
+                      element
+                    )
+                  }
+                />
+              )
+            )}
+          </Route>
+        </Routes>
+      </AuthProvider>
     </div>
   )
 }
