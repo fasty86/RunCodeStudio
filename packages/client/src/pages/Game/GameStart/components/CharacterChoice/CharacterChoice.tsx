@@ -28,18 +28,6 @@ const CharacterChoice = ({ selected, onSelect }: CharacterChoiceProps) => {
           </Radio>
         ))}
       </Radio.Group>
-      <div>
-        <Typography.Text
-          style={{
-            color: '#fff',
-            fontStyle: 'italic',
-            fontSize: '14px',
-            marginTop: '1rem',
-            display: 'block',
-          }}>
-          {characters.find(character => character.id === selected)?.description}
-        </Typography.Text>
-      </div>
     </div>
   )
 }

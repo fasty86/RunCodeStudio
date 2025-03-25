@@ -17,7 +17,13 @@ const Profile = () => {
       justify="center"
       vertical
       style={{ paddingTop: '3rem' }}>
-      <UserAvatar src={isSuccess ? user.avatar : ''} />
+      <UserAvatar
+        src={
+          isSuccess
+            ? `https://ya-praktikum.tech/api/v2/resources/${user.avatar}`
+            : ''
+        }
+      />
       <Userinfo {...user} email="test@ya.ru" />
     </Flex>
   )
