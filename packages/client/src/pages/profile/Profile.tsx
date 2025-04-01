@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Flex } from 'antd'
 
-import Userinfo from './components/UserInfo'
-import UserAvatar from './components/UserAvatar'
 import { useGetUserQuery } from '../../store/features/user/userApiSlice'
+import UserAvatar from './components/UserAvatar'
+import Userinfo from './components/UserInfo'
 
 const Profile = () => {
   const { isSuccess, data: user } = useGetUserQuery('')
