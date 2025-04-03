@@ -4,18 +4,18 @@ import Container from './components/Layout'
 import { Route, Routes } from 'react-router-dom'
 import Threads from './pages/forum/Threads'
 import Posts from './pages/forum/Posts'
-import LeaderBoard from './pages/Leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
-import Profile from './pages/Profile/Profile'
 import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AuthProvider } from './components/AuthContext'
+import Profile from './pages/Profile/Profile'
+import LeaderBoard from './pages/Leaderboard/LeaderBoard'
 
 export const AppRoutes = {
   LOGIN: 'login',
