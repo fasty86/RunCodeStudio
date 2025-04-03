@@ -2,7 +2,7 @@ import { Header } from 'antd/es/layout/layout'
 import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
 import styles from './LayoutHeader.module.css'
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from '../../hooks/useAuth'
 
 const items = [
   {
@@ -33,8 +33,7 @@ const items = [
 ]
 
 function LayoutHeader() {
-
-  const { logout } = useAuth();
+  const { logout, user } = useAuth()
 
   return (
     <Header style={{ display: 'flex', alignItems: 'center' }}>
@@ -49,7 +48,11 @@ function LayoutHeader() {
       <div className={styles.header_auth}>
         <Link to="login">Вход</Link>
         <Link to="registration">Регистрация</Link>
-        <Link to="/" onClick={logout}>Выход</Link>
+        {user && (
+          <Link to="/" onClick={logout}>
+            Выход
+          </Link>
+        )}
       </div>
     </Header>
   )

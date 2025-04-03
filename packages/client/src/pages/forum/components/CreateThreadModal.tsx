@@ -39,12 +39,13 @@ const CreateThreadModal: React.FC<modalProps> = ({
         destroyOnClose
         modalRender={dom => (
           <Form
-            data-testid="create-thread-form"
-            layout="vertical"
             form={form}
             name="form_in_modal"
-            clearOnDestroy
-            onFinish={values => onCreate(values)}>
+            layout="vertical"
+            initialValues={{ title: '', description: '' }}
+            onFinish={values => onCreate(values)}
+            data-testid="create-thread-form"
+            clearOnDestroy>
             {dom}
           </Form>
         )}>

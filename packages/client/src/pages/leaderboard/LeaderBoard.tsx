@@ -17,9 +17,9 @@ const columns: TableColumnsType<DataType> = [
     sorter: (a, b) => a.userId - b.userId,
     sortDirections: ['descend'],
     render: (userId: number) => (
-      <Text
-        strong
-        color="red">{`Здесь будет имя или никнейм игрока с id ${userId}`}</Text>
+      <Text strong color="red">{`Здесь будет имя или никнейм игрока с id: ${
+        userId ? userId : '1231231'
+      }`}</Text>
     ),
   },
   {
