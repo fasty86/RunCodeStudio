@@ -1,0 +1,48 @@
+.notification-bell {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  background-color: #212121;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.notification-bell svg {
+  fill: rgba(255, 255, 255, 0.65);
+}
+
+.notification-area {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: start;
+}
+
+.notification-switch-area {
+  display: flex;
+  gap: 12px;
+}
+
+.notification-switch-info .title,
+.notification-switch-info .description {
+  margin: 0;
+}
+
+.notification-switch-info .description {
+  font-size: 12px;
+  line-height: 1;
+  padding: 6px;
+  border: 1px solid rgb(233 233 233);
+  border-radius: 12px;
+  font-weight: 300;
+}
+
+.notification-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
