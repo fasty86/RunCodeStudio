@@ -3,7 +3,7 @@ import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
 import styles from './LayoutHeader.module.css'
 import { useAuth } from '../../hooks/useAuth'
-import NotificationBell from '../NotificationBell/NotificationBell'
+import NotificationBell from '../Notification/NotificationBell'
 
 const items = [
   {

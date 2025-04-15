@@ -1,0 +1,35 @@
+import { BellOutlined } from '@ant-design/icons'
+import { Button, Drawer } from 'antd'
+import style from './notification.module.css'
+import { useState } from 'react'
+import NotificationDrawer from './NotificationDrawer'
+
+const NotificationBell = () => {
+  const [open, setOpen] = useState(false)
+
+  const showDrawer = () => {
+    setOpen(true)
+  }
+
+  const onClose = () => {
+    setOpen(false)
+  }
+
+  return (
+    <>
+      <Button
+        shape="circle"
+        icon={<BellOutlined />}
+        color="default"
+        variant="filled"
+        onClick={showDrawer}
+        className={style['notification-bell']}
+      />
+      <Drawer title="Уведомления" onClose={onClose} open={open}>
+        <NotificationDrawer />
+      </Drawer>
+    </>
+  )
+}
+
+export default NotificationBell
