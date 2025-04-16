@@ -7,16 +7,35 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.client
+      target: production
       args:
         CLIENT_PORT: ${CLIENT_PORT}
     restart: always
     ports:
-      - '${CLIENT_PORT}:5000'
+      - '${CLIENT_PORT}:${CLIENT_PORT}'
     environment:
       - CLIENT_PORT=${CLIENT_PORT}
-      - SERVER_PORT=${SERVER_PORT}
+      - CLIENT_SERVER_PORT=${SERVER_PORT}
     networks:
       - game
+  client-dev:
+    container_name: prakticum-client-dev
+    image: prakticum-client-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+      target: development
+      args:
+        CLIENT_PORT: ${CLIENT_PORT}
+    restart: always
+    ports:
+      - '${CLIENT_PORT}:${CLIENT_PORT}'
+    environment:
+      - CLIENT_PORT=${CLIENT_PORT}
+    networks:
+      - game
+    volumes:
+      - ./packages/client/src:/app/src
   server:
     container_name: prakticum-server
     image: prackicum-server
@@ -31,11 +50,11 @@ services:
       - '${SERVER_PORT}:${SERVER_PORT}'
     environment:
       SERVER_PORT: ${SERVER_PORT}
-
     depends_on:
       - postgres
     networks:
       - game
+
   server-dev:
     container_name: prakticum-server-dev
     image: prackticum-server-dev
@@ -55,7 +74,9 @@ services:
     networks:
       - game
     volumes:
-      - .:/app
+      - ./packages/server/index.ts:/app/index.ts
+      - ./packages/server/db.ts:/app/db.ts
+      - ./.env:/app/.env
 
   postgres:
     image: postgres:latest
