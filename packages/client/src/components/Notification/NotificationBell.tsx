@@ -3,9 +3,11 @@ import { Button, Drawer } from 'antd'
 import style from './notification.module.css'
 import { useState } from 'react'
 import NotificationDrawer from './NotificationDrawer'
+import { useNotificationContext } from './NotificationContext'
 
 const NotificationBell = () => {
   const [open, setOpen] = useState(false)
+  const { countNotification } = useNotificationContext()
 
   const showDrawer = () => {
     setOpen(true)
@@ -24,6 +26,7 @@ const NotificationBell = () => {
         variant="filled"
         onClick={showDrawer}
         className={style['notification-bell']}
+        data-count={countNotification}
       />
       <Drawer title="Уведомления" onClose={onClose} open={open}>
         <NotificationDrawer />

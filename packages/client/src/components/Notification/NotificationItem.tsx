@@ -1,15 +1,18 @@
+import { CloseCircleOutlined } from '@ant-design/icons'
+import { NotificationType } from '../../hooks/useNotification'
 import style from './notification.module.css'
 
-type NotificationItem = {
-  title: string
-  description: string
-}
-const NotificationItem: React.FC<NotificationItem> = props => {
-  const { title, description } = props
+const NotificationItem = (props: NotificationType) => {
+  const { title, options } = props
   return (
     <div className={style['notification-item']}>
-      <div className={style[title]}>{title}</div>
-      <div className={style[description]}>{description}</div>
+      <div className={style.title}>{title}</div>
+      {options?.body && (
+        <div className={style.description}>{options?.body}</div>
+      )}
+      <div className={style['notification-close']}>
+        <CloseCircleOutlined />
+      </div>
     </div>
   )
 }
