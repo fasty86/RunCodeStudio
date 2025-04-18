@@ -3,6 +3,7 @@ import { Menu } from 'antd/lib'
 import { Link } from 'react-router-dom'
 import styles from './LayoutHeader.module.css'
 import { useAuth } from '../../hooks/useAuth'
+import NotificationBell from '../Notification/NotificationBell'
 
 const items = [
   {
@@ -45,6 +46,7 @@ function LayoutHeader() {
           </Menu.Item>
         ))}
       </Menu>
+      <NotificationBell />
       <div className={styles.header_auth}>
         {!user && (
           <>

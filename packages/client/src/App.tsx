@@ -1,10 +1,13 @@
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './AppRoutes'
+import { NotificationProvider } from './components/Notification/NotificationContext'
 
 function App() {
   return (
     <BrowserRouter future={{ v7_startTransition: true }}>
-      <AppRouter />
+      <NotificationProvider>
+        <AppRouter />
+      </NotificationProvider>
     </BrowserRouter>
   )
 }
