@@ -1,8 +1,9 @@
-import { Header } from 'antd/es/layout/layout'
-import { Menu } from 'antd'
+import { Layout } from 'antd/lib'
+import { Menu } from 'antd/lib'
 import { Link } from 'react-router-dom'
 import styles from './LayoutHeader.module.css'
 import { useAuth } from '../../hooks/useAuth'
+import NotificationBell from '../Notification/NotificationBell'
 
 const items = [
   {
@@ -36,7 +37,7 @@ function LayoutHeader() {
   const { logout, user } = useAuth()
 
   return (
-    <Header style={{ display: 'flex', alignItems: 'center' }}>
+    <Layout.Header style={{ display: 'flex', alignItems: 'center' }}>
       <div className="demo-logo" />
       <Menu theme="dark" mode="horizontal" style={{ flex: 1, minWidth: 0 }}>
         {items.map(item => (
@@ -45,6 +46,7 @@ function LayoutHeader() {
           </Menu.Item>
         ))}
       </Menu>
+      <NotificationBell />
       <div className={styles.header_auth}>
         {!user && (
           <>
@@ -58,7 +60,7 @@ function LayoutHeader() {
           </Link>
         )}
       </div>
-    </Header>
+    </Layout.Header>
   )
 }
 export default LayoutHeader

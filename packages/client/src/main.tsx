@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom/client'
-import { ConfigProvider } from 'antd'
+import { ConfigProvider } from 'antd/lib'
 
 import App from './App'
 import './index.css'
@@ -17,7 +17,8 @@ if ('serviceWorker' in navigator) {
   })
 }
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
   <React.StrictMode>
     <Provider store={store}>
       <ConfigProvider
