@@ -7,7 +7,7 @@ import path from 'path'
 
 export default defineConfig({
   server: {
-    port: Number(process.env.CLIENT_PORT) || 3003,
+    port: Number(process.env.CLIENT_SERVER_PORT) || 3002,
     host: true,
   },
   define: {

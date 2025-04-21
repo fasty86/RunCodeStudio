@@ -9,13 +9,12 @@ services:
       dockerfile: Dockerfile.client
       target: production
       args:
-        CLIENT_PORT: ${CLIENT_PORT}
+        CLIENT_PORT: ${CLIENT_SERVER_PORT}
     restart: always
     ports:
-      - '${CLIENT_PORT}:${CLIENT_PORT}'
+      - '${CLIENT_SERVER_PORT}:${CLIENT_SERVER_PORT}'
     environment:
-      - CLIENT_PORT=${CLIENT_PORT}
-      - CLIENT_SERVER_PORT=${SERVER_PORT}
+      - CLIENT_SERVER_PORT=${CLIENT_SERVER_PORT}
     networks:
       - game
   client-dev:
@@ -26,16 +25,17 @@ services:
       dockerfile: Dockerfile.client
       target: development
       args:
-        CLIENT_PORT: ${CLIENT_PORT}
+        CLIENT_PORT: ${CLIENT_SERVER_PORT}
     restart: always
     ports:
-      - '${CLIENT_PORT}:${CLIENT_PORT}'
+      - '${CLIENT_SERVER_PORT}:${CLIENT_SERVER_PORT}'
     environment:
-      - CLIENT_PORT=${CLIENT_PORT}
+      - CLIENT_SERVER_PORT=${CLIENT_SERVER_PORT}
     networks:
       - game
     volumes:
       - ./packages/client/src:/app/src
+      - ./packages/client/server:/app/server
   server:
     container_name: prakticum-server
     image: prackicum-server
