@@ -50,11 +50,23 @@ services:
       - '${SERVER_PORT}:${SERVER_PORT}'
     environment:
       SERVER_PORT: ${SERVER_PORT}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: ${POSTGRES_PORT}
     depends_on:
       - postgres
     networks:
       - game
-
+    command:
+      [
+        './scripts/wait-for-it.sh',
+        'postgres:${POSTGRES_PORT}',
+        '--',
+        'node',
+        '/app/index.js',
+      ]
   server-dev:
     container_name: prakticum-server-dev
     image: prackticum-server-dev
@@ -77,6 +89,14 @@ services:
       - ./packages/server/index.ts:/app/index.ts
       - ./packages/server/db.ts:/app/db.ts
       - ./.env:/app/.env
+    command:
+      [
+        './scripts/wait-for-it.sh',
+        'postgres:${POSTGRES_PORT}',
+        '--',
+        'yarn',
+        'dev',
+      ]
 
   postgres:
     image: postgres:latest
