@@ -27,7 +27,6 @@ RUN yarn install --production=true
 EXPOSE $CLIENT_PORT
 CMD [ "node", "/app/server/index.js" ] 
 
-# после мерджа с SSR  следует переписать
 FROM base as development 
 WORKDIR /app
 
