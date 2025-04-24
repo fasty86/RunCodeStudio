@@ -23,7 +23,10 @@ export const store = configureStore({
       serializableCheck: false,
     }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware),
 })
-
+export type PageInitArgs = {
+  dispatch: AppDispatch
+  state: RootState
+}
 export type RootState = ReturnType<typeof rootReducer>
 
 export type AppDispatch = typeof store.dispatch
