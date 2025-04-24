@@ -38,7 +38,7 @@ const Auth = () => {
     signIn({ login: values.username, password: values.password })
   }
 
-  const REDIRECT_URI = 'http://localhost:3000'
+  const REDIRECT_URI = 'http://localhost:3002'
   const handleYandexLogin = async () => {
     try {
       const res = await fetch(

@@ -14,6 +14,12 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import { AuthProvider } from './components/AuthContext'
 import Profile from './pages/Profile/Profile'
 import LeaderBoard from './pages/leaderboard/LeaderBoard'
+import { AppDispatch, RootState } from './store/store'
+
+export type PageInitArgs = {
+  dispatch: AppDispatch
+  state: RootState
+}
 
 export const AppRoutes = {
   LOGIN: 'login',

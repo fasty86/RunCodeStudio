@@ -1,7 +1,12 @@
 import { Flex, Table, TableColumnsType, Typography } from 'antd/lib'
 const { Title, Text } = Typography
 import React, { useEffect, useState } from 'react'
-import { useGetLeaderBoardMutation } from '../../store/features/leaderboard/leaderBoardApiSlice'
+import {
+  leaderBoardApiSlice,
+  useGetLeaderBoardMutation,
+} from '../../store/features/leaderboard/leaderBoardApiSlice'
+import { PageInitArgs } from '../../AppRoutes'
+import { useAppDispatch } from '../../store/hooks/deriveTypes'
 
 export type leaderBoardDataTableType = {
   nickname: string
@@ -91,5 +96,12 @@ const LeaderBoard: React.FC = () => {
     </Flex>
   )
 }
-
+export const initLeaderBoardPage = async ({ dispatch }: PageInitArgs) => {
+  return dispatch(
+    leaderBoardApiSlice.endpoints.getLeaderBoard.initiate({
+      cursor: 0,
+      limit: 100,
+    })
+  )
+}
 export default LeaderBoard
