@@ -12,14 +12,8 @@ import ErrorBoundary from './components/ErrorBoundary'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AuthProvider } from './components/AuthContext'
-import Profile from './pages/Profile/Profile'
 import LeaderBoard from './pages/leaderboard/LeaderBoard'
-import { AppDispatch, RootState } from './store/store'
-
-export type PageInitArgs = {
-  dispatch: AppDispatch
-  state: RootState
-}
+import Profile from './pages/Profile/Profile'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -38,44 +32,44 @@ type Route = RouteObject & {
 export const routConfig: Route[] = [
   {
     path: AppRoutes.LOGIN,
-    Component: Auth,
+    element: <Auth />,
   },
   {
     path: AppRoutes.PROFILE,
-    Component: Profile,
+    element: <Profile />,
     isProtected: true,
   },
   {
     path: AppRoutes.REGISTRATION,
-    Component: Registration,
+    element: <Registration />,
   },
   {
     path: AppRoutes.PLAY,
-    Component: GameMain,
+    element: <GameMain />,
     isProtected: true,
   },
   {
     path: AppRoutes.FORUM,
-    Component: Threads,
+    element: <Threads />,
     isProtected: true,
   },
   {
     path: `${AppRoutes.FORUM}/:id`,
-    Component: Posts,
+    element: <Posts />,
     isProtected: true,
   },
   {
     path: AppRoutes.LEADER_BOARD,
-    Component: LeaderBoard,
+    element: <LeaderBoard />,
     isProtected: true,
   },
   {
     path: '*',
-    Component: NotFound,
+    element: <NotFound />,
   },
   {
+    element: <ServerError />,
     path: 'server-error',
-    Component: ServerError,
   },
 ]
 
@@ -86,17 +80,17 @@ const AppRouter = () => {
         <Routes>
           <Route path="/" element={<Container />}>
             <Route index element={<Landing />} />
-            {routConfig.map(({ path, Component, isProtected = false }) => (
+            {routConfig.map(({ path, element, isProtected = false }) => (
               <Route
                 key={path}
                 path={path}
                 element={
                   isProtected ? (
                     <ProtectedRoute>
-                      <>{Component}</>
+                      <>{element}</>
                     </ProtectedRoute>
                   ) : (
-                    <>{Component}</>
+                    <>{element}</>
                   )
                 }
               />
