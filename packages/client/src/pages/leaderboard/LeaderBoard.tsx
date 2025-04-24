@@ -5,8 +5,7 @@ import {
   leaderBoardApiSlice,
   useGetLeaderBoardMutation,
 } from '../../store/features/leaderboard/leaderBoardApiSlice'
-import { PageInitArgs } from '../../AppRoutes'
-import { useAppDispatch } from '../../store/hooks/deriveTypes'
+import { PageInitArgs } from '../../store/store'
 
 export type leaderBoardDataTableType = {
   nickname: string
