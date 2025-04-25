@@ -10,10 +10,21 @@ import {
 import { createFetchRequest } from './entry-server.utils'
 import { routConfig } from './AppRoutes'
 import './index.css'
-import { store } from './store/store'
+
 import { AuthProvider } from './components/AuthContext'
+import { configureStore } from '@reduxjs/toolkit'
+import { rootReducer } from './store/store'
+import { leaderBoardApiSlice } from './store/features/leaderboard/leaderBoardApiSlice'
+import { userApiSlice } from './store/features/user/userApiSlice'
 
 export const render = async (req: ExpressRequest) => {
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware),
+  })
   const { query, dataRoutes } = createStaticHandler(routConfig)
 
   const fetchRequest = createFetchRequest(req)
@@ -23,7 +34,12 @@ export const render = async (req: ExpressRequest) => {
   if (context instanceof Response) {
     throw context
   }
-
+  await store.dispatch(
+    leaderBoardApiSlice.endpoints.getLeaderBoard.initiate({
+      cursor: 0,
+      limit: 100,
+    })
+  )
   const router = createStaticRouter(dataRoutes, context)
 
   return {
@@ -34,5 +50,6 @@ export const render = async (req: ExpressRequest) => {
         </AuthProvider>
       </Provider>
     ),
+    initialState: store.getState(),
   }
 }

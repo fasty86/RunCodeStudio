@@ -7,10 +7,11 @@ import path from 'path'
 
 export default defineConfig({
   server: {
-    port: Number(process.env.CLIENT_PORT) || 3000,
+    port: Number(process.env.CLIENT_SERVER_PORT) || 3002,
+    host: true,
   },
   define: {
-    __SERVER_PORT__: process.env.SERVER_PORT,
+    __SERVER_PORT__: process.env.CLIENT_SERVER_PORT,
   },
   build: {
     outDir: path.join(__dirname, 'dist/client'),

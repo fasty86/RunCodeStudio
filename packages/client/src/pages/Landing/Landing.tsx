@@ -7,7 +7,7 @@ import { Flex } from 'antd/lib'
 import { useAuth } from '../../hooks/useAuth'
 import { useYandexAuthMutation } from '../../store/features/user/userApiSlice'
 
-const REDIRECT_URI = 'http://localhost:3000'
+const REDIRECT_URI = `http://localhost:${__SERVER_PORT__}`
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
