@@ -13,8 +13,7 @@ import './index.css'
 
 import { AuthProvider } from './components/AuthContext'
 import { createStore } from './store/utils/createStore'
-import { leaderBoardApiSlice } from './store/features/leaderboard/leaderBoardApiSlice'
-import { userApiSlice } from './store/features/user/userApiSlice'
+import { preloadData } from './store/utils/preloadData'
 
 export const render = async (req: ExpressRequest) => {
   const store = createStore()
@@ -27,12 +26,10 @@ export const render = async (req: ExpressRequest) => {
   if (context instanceof Response) {
     throw context
   }
-  await store.dispatch(
-    leaderBoardApiSlice.endpoints.getLeaderBoard.initiate({
-      cursor: 0,
-      limit: 100,
-    })
-  )
+
+  // Предварительная загрузка данных
+  const initialState = await preloadData(store)
+  
   const router = createStaticRouter(dataRoutes, context)
 
   return {
@@ -43,6 +40,6 @@ export const render = async (req: ExpressRequest) => {
         </AuthProvider>
       </Provider>
     ),
-    initialState: store.getState(),
+    initialState,
   }
 }
