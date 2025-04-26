@@ -8,6 +8,7 @@ import {
   HasMany,
 } from 'sequelize-typescript'
 import { Post } from './Post'
+import { Comment } from './Comment'
 
 @Table({
   tableName: 'users',
@@ -54,4 +55,9 @@ export class User extends Model<User> {
     onDelete: 'CASCADE',
   })
   declare posts: Post[]
+
+  @HasMany(() => Comment, {
+    foreignKey: 'user_id',
+  })
+  declare comments: Comment[]
 }

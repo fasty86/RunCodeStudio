@@ -3,11 +3,13 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript'
 import { User } from './User'
-import { Category } from './Categories'
+import { Category } from './Category'
+import { Comment } from './Comment'
 
 interface PostAttributes {
   title: string
@@ -58,4 +60,11 @@ export class Post extends Model<Post, PostAttributes> {
 
   @BelongsTo(() => User)
   declare user: User
+
+  @HasMany(() => Comment, {
+    foreignKey: 'post_id',
+    as: 'comments',
+    onDelete: 'CASCADE',
+  })
+  declare comments: Comment[]
 }

@@ -3,7 +3,8 @@ import path from 'path'
 import dotenv from 'dotenv'
 import { User } from './models/User'
 import { Post } from './models/Post'
-import { Category } from './models/Categories'
+import { Category } from './models/Category'
+import { Comment } from './models/Comment'
 
 dotenv.config({ path: path.join(__dirname, '../../.env') })
 
@@ -17,7 +18,7 @@ export const sequelize = new Sequelize({
   username: POSTGRES_USER,
   password: String(POSTGRES_PASSWORD),
   database: POSTGRES_DB,
-  models: [User, Post, Category],
+  models: [User, Post, Category, Comment],
 })
 
 export const checkDatabaseConnection = async () => {
