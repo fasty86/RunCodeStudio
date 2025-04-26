@@ -5,7 +5,7 @@ import { ConfigProvider } from 'antd/lib'
 
 import App from './App'
 import './index.css'
-import { store } from './store/store'
+import { createStore } from './store/utils/createStore'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -16,6 +16,9 @@ if ('serviceWorker' in navigator) {
     }
   })
 }
+
+const preloadedState = window.APP_INITIAL_STATE || undefined
+const store = createStore(preloadedState)
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,

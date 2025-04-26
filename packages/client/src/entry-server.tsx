@@ -12,19 +12,12 @@ import { routConfig } from './AppRoutes'
 import './index.css'
 
 import { AuthProvider } from './components/AuthContext'
-import { configureStore } from '@reduxjs/toolkit'
-import { rootReducer } from './store/store'
+import { createStore } from './store/utils/createStore'
 import { leaderBoardApiSlice } from './store/features/leaderboard/leaderBoardApiSlice'
 import { userApiSlice } from './store/features/user/userApiSlice'
 
 export const render = async (req: ExpressRequest) => {
-  const store = configureStore({
-    reducer: rootReducer,
-    middleware: getDefaultMiddleware =>
-      getDefaultMiddleware({
-        serializableCheck: false,
-      }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware),
-  })
+  const store = createStore()
   const { query, dataRoutes } = createStaticHandler(routConfig)
 
   const fetchRequest = createFetchRequest(req)
