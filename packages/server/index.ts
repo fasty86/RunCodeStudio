@@ -25,10 +25,6 @@ const startServer = async () => {
     app.use('/api', postRouter)
     app.use('/api', commentsRouter)
 
-    app.get('/', (_, res) => {
-      res.json('👋 Howdy from the server :)')
-    })
-
     app.listen(port, () => {
       console.info(`  ➜ 🎸 Server is listening on port: ${port}`)
     })

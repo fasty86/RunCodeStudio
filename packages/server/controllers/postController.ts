@@ -4,9 +4,11 @@ import { Post } from '../models/Post'
 const getPosts = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { skip = 0, limit = 10 } = req.query
+    const max_limit = 50
+
     const posts = await Post.findAll({
       offset: Number(skip),
-      limit: Number(limit),
+      limit: Math.max(Number(limit), max_limit),
     })
 
     res.json({
