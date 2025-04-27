@@ -12,6 +12,11 @@ import { routConfig } from './AppRoutes'
 import './index.css'
 
 import { AuthProvider } from './components/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
+import { configureStore } from '@reduxjs/toolkit'
+import { rootReducer } from './store/store'
+import { leaderBoardApiSlice } from './store/features/leaderboard/leaderBoardApiSlice'
+import { userApiSlice } from './store/features/user/userApiSlice'
 import { createStore } from './store/utils/createStore'
 import { preloadData } from './store/utils/preloadData'
 
@@ -29,14 +34,16 @@ export const render = async (req: ExpressRequest) => {
 
   // Предварительная загрузка данных
   const initialState = await preloadData(store)
-  
+
   const router = createStaticRouter(dataRoutes, context)
 
   return {
     html: ReactDOM.renderToString(
       <Provider store={store}>
         <AuthProvider>
-          <StaticRouterProvider router={router} context={context} />
+          <ThemeProvider>
+            <StaticRouterProvider router={router} context={context} />
+          </ThemeProvider>
         </AuthProvider>
       </Provider>
     ),

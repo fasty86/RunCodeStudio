@@ -1,6 +1,14 @@
-import { Client } from 'pg'
+import { Sequelize } from 'sequelize-typescript'
+import path from 'path'
 import dotenv from 'dotenv'
-dotenv.config()
+import { User } from './models/User'
+import { Post } from './models/Post'
+import { Category } from './models/Category'
+import { Comment } from './models/Comment'
+import { Theme } from './models/Theme'
+
+dotenv.config({ path: path.join(__dirname, '../../.env') })
+
 const {
   POSTGRES_USER,
   POSTGRES_PASSWORD,
@@ -9,27 +17,23 @@ const {
   POSTGRES_HOST,
 } = process.env
 
-export const createClientAndConnect = async (): Promise<Client | null> => {
+export const sequelize = new Sequelize({
+  dialect: 'postgres',
+  host: POSTGRES_HOST,
+  port: Number(POSTGRES_PORT),
+  username: POSTGRES_USER,
+  password: String(POSTGRES_PASSWORD),
+  database: POSTGRES_DB,
+  models: [User, Post, Category, Comment, Theme],
+})
+
+export const checkDatabaseConnection = async () => {
   try {
-    const client = new Client({
-      user: POSTGRES_USER,
-      host: POSTGRES_HOST,
-      database: POSTGRES_DB,
-      password: POSTGRES_PASSWORD,
-      port: Number(POSTGRES_PORT),
-    })
-
-    await client.connect()
-
-    const res = await client.query('SELECT NOW()')
-    console.info('  ➜ 🎸 Connected to the database at:', res?.rows?.[0].now)
-
-    client.end()
-
-    return client
-  } catch (e) {
-    console.error(e)
+    await sequelize.authenticate()
+    return true
+  } catch (error) {
+    console.error('Нет подключения к БД:')
+    process.exit(1)
+    return false
   }
-
-  return null
 }
