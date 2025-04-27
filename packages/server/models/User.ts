@@ -6,9 +6,12 @@ import {
   AutoIncrement,
   Model,
   HasMany,
+  ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript'
 import { Post } from './Post'
 import { Comment } from './Comment'
+import { Theme } from './Theme'
 
 @Table({
   tableName: 'users',
@@ -61,7 +64,7 @@ export class User extends Model<User> {
   })
   declare comments: Comment[]
 
- @ForeignKey(() => Theme)
+  @ForeignKey(() => Theme)
   @Column({
     type: DataType.INTEGER,
     allowNull: true,

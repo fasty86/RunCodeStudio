@@ -9,8 +9,13 @@ import { Theme } from './models/Theme'
 
 dotenv.config({ path: path.join(__dirname, '../../.env') })
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT, POSTGRES_HOST } =
-  process.env
+const {
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_DB,
+  POSTGRES_PORT,
+  POSTGRES_HOST,
+} = process.env
 
 export const sequelize = new Sequelize({
   dialect: 'postgres',
@@ -27,7 +32,7 @@ export const checkDatabaseConnection = async () => {
     await sequelize.authenticate()
     return true
   } catch (error) {
-    console.error('Нет подключения к БД:', err)
+    console.error('Нет подключения к БД:')
     process.exit(1)
     return false
   }

@@ -1,7 +1,6 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
 import express from 'express'
-import { checkDatabaseConnection } from './db'
 import postRouter from './routes/posts'
 import commentsRouter from './routes/comments'
 import themeRouter from './routes/theme'
@@ -9,7 +8,6 @@ import { sanitizeInput } from './middlewares/sanitize'
 import { checkDatabaseConnection } from './db'
 
 dotenv.config()
-app.use(cors())
 const port = Number(process.env.SERVER_PORT) || 3001
 
 const startServer = async () => {
@@ -18,9 +16,10 @@ const startServer = async () => {
     if (!isConnected) {
       throw new Error('Database connection failed')
     }
-    
+
     const app = express()
-   
+
+    app.use(cors())
     app.use(express.json())
     app.use(sanitizeInput)
 
