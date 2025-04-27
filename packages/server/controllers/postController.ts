@@ -37,6 +37,7 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
 
     if (!title || !user_id || !category_id) {
       res.status(400).json({ error: 'Необходимы title, user_id и category_id' })
+      return
     }
 
     const post = await Post.create({
@@ -62,6 +63,7 @@ const deletePost = async (req: Request, res: Response, next: NextFunction) => {
 
     if (!deleted) {
       res.status(404).json({ error: 'Пост не найден' })
+      return
     }
 
     res.status(204).end()
