@@ -60,4 +60,14 @@ export class User extends Model<User> {
     foreignKey: 'user_id',
   })
   declare comments: Comment[]
+
+ @ForeignKey(() => Theme)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  declare themeId: number | null
+
+  @BelongsTo(() => Theme)
+  declare theme: Theme
 }
