@@ -8,7 +8,7 @@ export const seeders = async <T extends Model>(
 ) => {
   try {
     await sequelize.authenticate()
-    await Model.sync({ force: true })
+   await Model.sync({ force: true })
     const raw = await fs.readFile(namePath, 'utf-8')
     const data = JSON.parse(raw)
     await Model.bulkCreate(data)

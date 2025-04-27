@@ -4,17 +4,17 @@ import {
   DataType,
   PrimaryKey,
   AutoIncrement,
-  ForeignKey,
-  BelongsTo,
   Model,
+  HasMany,
 } from 'sequelize-typescript'
-import { Theme } from './Theme'
+import { Post } from './Post'
+import { Comment } from './Comment'
 
 @Table({
   tableName: 'users',
   timestamps: true,
 })
-export class User extends Model {
+export class User extends Model<User> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -50,7 +50,18 @@ export class User extends Model {
   })
   declare password: string
 
-  @ForeignKey(() => Theme)
+  @HasMany(() => Post, {
+    foreignKey: 'post_id',
+    onDelete: 'CASCADE',
+  })
+  declare posts: Post[]
+
+  @HasMany(() => Comment, {
+    foreignKey: 'user_id',
+  })
+  declare comments: Comment[]
+
+ @ForeignKey(() => Theme)
   @Column({
     type: DataType.INTEGER,
     allowNull: true,

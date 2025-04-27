@@ -13,7 +13,7 @@
     "firstname": "Александра",
     "lastname": "Горшкова",
     "email": "Kazimir.Shiryaeva@mail.ru",
-    "login": "gray_2",
+    "login": "gray_55",
     "password": "Zz0JRiYvuHg9A0l",
     "themeId": 2
   },
@@ -33,7 +33,7 @@
     "email": "Mikhei.Borisova@yahoo.com",
     "login": "gray_4",
     "password": "07i3lsWbAWMOcpI",
-    "themeId": 1
+    "themeId": 2
   },
   {
     "id": 5,
@@ -42,6 +42,6 @@
     "email": "Yulian_Zueva@yandex.ru",
     "login": "gray_5",
     "password": "Cf4QuPup9m8xE5H",
-    "themeId": 2
+    "themeId": 1
   }
 ]
