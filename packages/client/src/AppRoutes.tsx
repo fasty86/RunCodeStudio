@@ -9,9 +9,7 @@ import Registration from './pages/Registration/Registration'
 import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
-
 import { ProtectedRoute } from './components/ProtectedRoute'
-import { AuthProvider } from './components/AuthContext'
 import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Profile from './pages/Profile/Profile'
 
@@ -76,28 +74,26 @@ export const routConfig: Route[] = [
 const AppRouter = () => {
   return (
     <ErrorBoundary>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<Container />}>
-            <Route index element={<Landing />} />
-            {routConfig.map(({ path, element, isProtected = false }) => (
-              <Route
-                key={path}
-                path={path}
-                element={
-                  isProtected ? (
-                    <ProtectedRoute>
-                      <>{element}</>
-                    </ProtectedRoute>
-                  ) : (
+      <Routes>
+        <Route path="/" element={<Container />}>
+          <Route index element={<Landing />} />
+          {routConfig.map(({ path, element, isProtected = false }) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                isProtected ? (
+                  <ProtectedRoute>
                     <>{element}</>
-                  )
-                }
-              />
-            ))}
-          </Route>
-        </Routes>
-      </AuthProvider>
+                  </ProtectedRoute>
+                ) : (
+                  <>{element}</>
+                )
+              }
+            />
+          ))}
+        </Route>
+      </Routes>
     </ErrorBoundary>
   )
 }
