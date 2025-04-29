@@ -9,14 +9,12 @@ const rootReducer = combineReducers({
   [leaderBoardApiSlice.reducerPath]: leaderBoardApiSlice.reducer,
 })
 
-type RootState = ReturnType<typeof rootReducer>
-
 /**
  * Создает Redux store с предустановленным состоянием
- * @param {Partial<RootState>} [preloadedState] - Начальное состояние store
+ * @param {Partial<ReturnType<typeof rootReducer>>} [preloadedState] - Начальное состояние store
  * @returns {ReturnType<typeof configureStore>} Сконфигурированный Redux store
  */
-export const createStore = (preloadedState?: Partial<RootState>) => {
+export const createStore = (preloadedState?: Partial<ReturnType<typeof rootReducer>>) => {
   return configureStore({
     reducer: rootReducer,
     preloadedState,

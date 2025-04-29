@@ -1,5 +1,5 @@
-import { Store, Dispatch } from 'redux';
-import type { RootState, AppDispatch } from '../store/store';
+import { Store } from 'redux';
+import type { RootState, AppDispatch } from '../store/types';
 
 /**
  * Параметры маршрута

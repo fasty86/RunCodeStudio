@@ -1,7 +1,6 @@
 import { useStore as useStoreBase, useDispatch as useDispatchBase } from 'react-redux'
 import { store } from './index'
-import type { PageInitArgs } from './index'
-import type { RootState } from './utils/createStore'
+import type { PageInitArgs, RootState } from './types'
 
 declare global {
   interface Window {

@@ -5,6 +5,3 @@ export type { RootState, AppStore, PageInitArgs }
 export { createStore }
 
 export const store = createStore(typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE)
-
-// Экспортируем RootState для использования в других модулях
-export type { RootState } 
