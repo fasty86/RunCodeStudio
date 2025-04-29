@@ -2,6 +2,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import forumSlice from './features/forum/forumSlice'
 import { userApiSlice } from './features/user/userApiSlice'
 import { leaderBoardApiSlice } from './features/leaderboard/leaderBoardApiSlice'
+import {
+  useStore as useStoreBase,
+  useDispatch as useDispatchBase,
+} from 'react-redux'
 declare global {
   interface Window {
     APP_INITIAL_STATE: RootState
@@ -30,3 +34,6 @@ export type PageInitArgs = {
 export type RootState = ReturnType<typeof rootReducer>
 
 export type AppDispatch = typeof store.dispatch
+
+export const useStore: () => typeof store = useStoreBase
+export const useDispatch: () => AppDispatch = useDispatchBase

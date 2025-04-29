@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom/client'
 
 import App from './App'
 import './index.css'
-import { store } from './store/store'
 import { AuthProvider } from './components/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import { createStore } from './store/utils/createStore'
@@ -19,8 +18,7 @@ if ('serviceWorker' in navigator) {
   })
 }
 
-const preloadedState = window.APP_INITIAL_STATE || undefined
-const store = createStore(preloadedState)
+const store = createStore(window.APP_INITIAL_STATE)
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
