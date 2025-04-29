@@ -1,11 +1,10 @@
-import { createStore, RootState, AppStore } from './utils/createStore'
+import { createStore } from './utils/createStore'
+import type { RootState, AppStore, PageInitArgs } from './types'
 
-export type { RootState, AppStore }
+export type { RootState, AppStore, PageInitArgs }
 export { createStore }
 
 export const store = createStore(typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE)
 
-export type PageInitArgs = {
-  dispatch: ReturnType<typeof createStore>['dispatch']
-  state: RootState
-} 
+// Экспортируем RootState для использования в других модулях
+export type { RootState } 

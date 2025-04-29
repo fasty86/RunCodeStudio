@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   [leaderBoardApiSlice.reducerPath]: leaderBoardApiSlice.reducer,
 })
 
-export type RootState = ReturnType<typeof rootReducer>
+type RootState = ReturnType<typeof rootReducer>
 
 /**
  * Создает Redux store с предустановленным состоянием
