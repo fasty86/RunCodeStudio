@@ -8,8 +8,11 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
+    env:
+      REPO: ${{ github.event.repository.name }}
     steps:
+      - name: show REPO env variable
+        run: echo ${{ env.REPO }}
       - name: Checkout code
         uses: actions/checkout@v4
       - name: set lower case owner and repository name
